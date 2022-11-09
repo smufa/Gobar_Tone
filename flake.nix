@@ -12,10 +12,18 @@
         };
       in
       rec {
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nodePackages.vscode-html-languageserver-bin
+            nodePackages.vscode-langservers-extracted
+            nodePackages.typescript-language-server
+            nodePackages.typescript
+            nodejs
+            node2nix
           ];
+          shellHook = ''
+            # node ./bin/server.js 1>/dev/null &
+            fish
+          '';
         };
       }
     );
